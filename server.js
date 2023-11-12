@@ -111,14 +111,58 @@ app.post("/api/todo", (req, res)=>{
 
 // -----------------------------------------------------------
 
+// Das ist das Update
 app.patch("/api/todo/:id", (req, res)=>{
+    let data = {
+        name: req.body.name,
+        description: req.body.description,
+        updated: Date.now()
+    };
+
+    // Neue coole Funkstion: COALESCE(?, name)
+    // Hier nimmt er entweder den neuen Wert oder nimmt den alten Wert
+    // Es gibt den ersten Wert zurück, der nicht NULL ist
+    let sql = `UPDATE todo SET
+        name = COALESCE(?, name),
+        description = COALESCE(?, description),
+        updated = ?
+        WHERE id = ?`;
+
+    // Die ID muss aus der URL rausgeholt werden, darum req.params.id
+    let params = [data.name, data.description, data.updated, req.params.id];  
+
+    db.run(sql, params, function(err){
+        if(err){
+            res.status(400).json({error: err.message});
+            return;
+        }
+
+        res.json({
+            message: "OK",
+            data: data,
+            changes: this.changes,
+        });
+    })
 
 });
 
 // -----------------------------------------------------------
 
 app.delete("/api/todo/:id", (req, res)=>{
+    let sql = "DELETE FROM todo WHERE id = ?";
+    let params = [req.params.id];
 
+    db.run(sql, params, function(err){
+        if(err){
+            res.status(400).json({error: err.message});
+            return;
+        }
+
+        res.json({
+            message: "OK",
+            changes: this.changes,
+        });
+    });
 });
 
 // -----------------------------------------------------------
