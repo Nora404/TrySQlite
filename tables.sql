@@ -60,5 +60,7 @@ SELECT
 
 
 -- Datensätze löschen
-DELETE FROM users WHERE id = 2;  
+DELETE FROM users WHERE id = 2;
+DELETE FROM users WHERE role_id = 3;  
+
 
