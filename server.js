@@ -18,7 +18,20 @@ app.get("/api", (req, res)=>{
     res.json({message: "OK"})
 });
 app.get("/api/todos", (req, res)=>{
+    let sql = "SELECT * FROM todo";
+    let params = [];
+    
+    db.all(sql, params, (err, rows)=>{
+        if(err){
+            res.status(400).json({error: err.message});
+            return;
+        }
 
+       res.json({
+        message: "OK",
+        data: rows,
+       }) 
+    });
 });
 app.get("/api/todo/:id", (req, res)=>{
 
