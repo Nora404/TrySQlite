@@ -84,14 +84,15 @@ app.post("/api/todo", (req, res)=>{
     let data = {
         name: req.body.name,
         description: req.body.description,
+        complete: 0,
         created: Date.now(),
         updated: Date.now()
     };
 
     // Nun den SQLite befehl zusammen setzten
     // Erinnerung, die ? sind Platzhalter
-    let sql = "INSERT INTO todo (name, description, created, updated) VALUES (?,?,?,?)";
-    let params = [data.name, data.description, data.created, data.updated];
+    let sql = "INSERT INTO todo (name, description, complete, created, updated) VALUES (?,?,?,?,?)";
+    let params = [data.name, data.description, data.complete, data.created, data.updated];
 
     // funktion statt Arrow wegen dem Scope 
     // damit this sich auf die das db Objekt bezieht
@@ -116,6 +117,7 @@ app.patch("/api/todo/:id", (req, res)=>{
     let data = {
         name: req.body.name,
         description: req.body.description,
+        complete: req.body.complete,
         updated: Date.now()
     };
 
@@ -125,11 +127,12 @@ app.patch("/api/todo/:id", (req, res)=>{
     let sql = `UPDATE todo SET
         name = COALESCE(?, name),
         description = COALESCE(?, description),
+        complete = COALESCE(?, complete),
         updated = ?
         WHERE id = ?`;
 
     // Die ID muss aus der URL rausgeholt werden, darum req.params.id
-    let params = [data.name, data.description, data.updated, req.params.id];  
+    let params = [data.name, data.description, data.complete, data.updated, req.params.id];  
 
     db.run(sql, params, function(err){
         if(err){
