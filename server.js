@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const db = require("./database.js");
 
+// Das ist, damit der body (req) gefüllt werden kann
 app.use(express.json());
 
 const HTTP_PORT = 8000;
@@ -60,9 +61,11 @@ app.get("/api/todo/:id", (req, res)=>{
 
 // -----------------------------------------------------------
 
+// Ein neues Todo wird hinzugefügt
 app.post("/api/todo", (req, res)=>{
     let errors = [];
 
+    // Erstmal Fehlerbehandlung, ist etwas drin?
     if(!req.body.name){
         errors.push("no name");
     }
@@ -70,12 +73,14 @@ app.post("/api/todo", (req, res)=>{
         errors.push("no text");
     }
 
+    // Wenn ja dann sende die errors
     if(errors.length){
         res.status(400).json({
             error: errors,
         });
     }
 
+    // Jetzt Daten aufsammeln und vorbereiten
     let data = {
         name: req.body.name,
         description: req.body.description,
@@ -83,10 +88,13 @@ app.post("/api/todo", (req, res)=>{
         updated: Date.now()
     };
 
+    // Nun den SQLite befehl zusammen setzten
+    // Erinnerung, die ? sind Platzhalter
     let sql = "INSERT INTO todo (name, description, created, updated) VALUES (?,?,?,?)";
     let params = [data.name, data.description, data.created, data.updated];
 
     // funktion statt Arrow wegen dem Scope 
+    // damit this sich auf die das db Objekt bezieht
     db.run(sql, params, function(err) {
         if(err){
             res.status(400).json({error: err.message});
@@ -96,7 +104,6 @@ app.post("/api/todo", (req, res)=>{
         res.json({
             message: "OK",
             data: data,
-            // this ist hier die db
             id: this.lastID,
         }); 
     });
