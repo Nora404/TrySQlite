@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const db = require("./database.js");
 
 const HTTP_PORT = 8000;
 
