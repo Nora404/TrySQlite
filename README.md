@@ -27,3 +27,7 @@ Boolean werden als 0(false) und 1(true) gespeichert
 
 ### REST Testen
 Installiere dieses Plugin: Thunder Client
+
+### CORSE
+Ein Packet muss nachinstaliert werden: `npm i cors`  
+Das muss in der server.js benutzt werden

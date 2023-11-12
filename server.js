@@ -1,9 +1,12 @@
 const express = require("express");
 const app = express();
+const cors = require("cors");
 const db = require("./database.js");
 
 // Das ist, damit der body (req) gefüllt werden kann
 app.use(express.json());
+
+app.use(cors());
 
 const HTTP_PORT = 8000;
 
