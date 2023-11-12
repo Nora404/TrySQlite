@@ -16,7 +16,24 @@ app.listen(HTTP_PORT, () =>{
 app.get("/api", (req, res)=>{
     res.json({message: "OK"})
 });
-// app.get();
-// app.post();
-// app.patch();
-// app.delete();
+app.get("/api/todos", (req, res)=>{
+
+});
+app.get("/api/todo/:id", (req, res)=>{
+
+});
+app.post("/api/todo", (req, res)=>{
+    
+});
+app.patch("/api/todo/:id", (req, res)=>{
+
+});
+app.delete("/api/todo/:id", (req, res)=>{
+
+});
+
+app.use((req, res)=>{
+    res.status(404).json({
+        message: "Das war wohl nix"
+    })
+})
