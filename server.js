@@ -81,6 +81,8 @@ app.post("/api/todo", (req, res)=>{
         res.status(400).json({
             error: errors,
         });
+        alert("Todo konnte nicht angelegt werden")
+        return
     }
 
     // Jetzt Daten aufsammeln und vorbereiten
