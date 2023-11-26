@@ -27,7 +27,7 @@ app.get("/api", (req, res)=>{
 // -----------------------------------------------------------
 
 app.get("/api/todos", (req, res)=>{
-    let sql = "SELECT * FROM todo";
+    let sql = "SELECT * FROM todo ORDER BY complete, updated DESC";
     let params = [];
     
     db.all(sql, params, (err, rows)=>{

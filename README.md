@@ -27,7 +27,35 @@ Boolean werden als 0(false) und 1(true) gespeichert
 
 ### REST Testen
 Installiere dieses Plugin: Thunder Client
+Es dient zum Testen der API, ein neues Symbol erscheint in der Menüleiste.  
+Im neuen Fenster kann eine `New Request` erstellt werden (Ältere werden im Verlauf gespeichert) Im simulierten Browser den gewünschten Endpunkt eingeben und schauen was passiert.
+
+***
 
 ### CORSE
 Ein Packet muss nachinstaliert werden: `npm i cors`  
 Das muss in der server.js benutzt werden
+
+```
+const cors = require("cors");
+app.use(cors());
+```
+
+***
+
+### Endpunkte
+Endpunkte müssen in server.js erstellt werden.  
+Parameter req = Das was vom Client kommt  
+Parameter res = Die Antwort vom Server  
+```
+app.get("/api", (req, res)=>{
+    res.json({message: "OK"})
+});
+```
+
+***
+
+### Was tun bei Bugs
+- Fehler reproduzieren 
+- Ort(Code) wo der Fehler auftritt anschauen 
+- Programmverlauf folgen
